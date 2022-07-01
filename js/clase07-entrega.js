@@ -1,11 +1,47 @@
 
 const listaProductos = [
-    {nombre:"Polera", categoria: "Tops", valor:100},
-    {nombre:"Camisa", categoria: "Tops", valor:150},
-    {nombre:"Pantalón", categoria: "Bottoms", valor:200},
-    {nombre:"Falda", categoria: "Bottoms", valor:250},
-    {nombre:"Botín", categoria: "Zapatos", valor:300},
-    {nombre:"Bota", categoria: "Zapatos", valor:350},
+    {
+        id: 1,
+        nombre:"Polera", 
+        categoria: "Tops",
+        valor:15000,
+        imagen:""
+    },
+    {
+        id:2,
+        nombre:"Camisa", 
+        categoria: "Tops", 
+        valor:150,
+        imagen:""
+    },
+    {
+        id:3,
+        nombre:"Pantalón", 
+        categoria: "Bottoms", 
+        valor:200,
+        imagen:""
+    },
+    {
+        id:4,
+        nombre:"Falda", 
+        categoria: "Bottoms", 
+        valor:250,
+        imagen:""
+    },
+    {
+        id:5,
+        nombre:"Botín", 
+        categoria: "Zapatos", 
+        valor:300,
+        imagen:""
+    },
+    {
+        id:6,
+        nombre:"Bota", 
+        categoria: "Zapatos", 
+        valor:350,
+        imagen:"",
+    },
 ]
 
 // Categorías
@@ -43,12 +79,14 @@ console.log("estos son los Bottoms: "+mostrarZapatos);
 console.log("estos son los Bottoms:"+precioZapatos);
 
 
-//Se define la función del éxto al agregar el producto al carrito
+/* //Se define la función del éxto al agregar el producto al carrito
 function mensajeExito(seleccion, precio){
     total=total+precio;
     alert(`Se ha añadido ${seleccion} a $${precio} a tu carrito de forma exitosa. \nTotal de la compra = $${total}`);
-}
+} */
 
+
+/* 
 //Se define la función donde se indica qué productos se deben mostrar en cada una de las categorías
 function seleccionarCategoria(categoriaSeleccionada,prodDisponible1, precio1, prodDisponible2, precio2){
     alert(`seleccionaste ${categoriaSeleccionada}`);
@@ -89,11 +127,55 @@ function seleccionarCategoria(categoriaSeleccionada,prodDisponible1, precio1, pr
         break;
     }      
 
-}
+} */
+
+//Conectar las categorías con el menú
+const menuCategorias = document.getElementById("callToCategorias");
+//Contar la cantidad de elementos
+let cantidadCategorias = "";
+//Agregar los li con el nombre de cada categoría (elemento) al menu
+categorias.forEach(element => {
+        cantidadCategorias += `
+            <li class="nav-item">
+                <a class="nav-link " href="#" >${element}</a>
+            </li>
+        `
+});
+//crear dentro del html
+menuCategorias.innerHTML=cantidadCategorias;
+
+// se vincula el contenedor de los productos y se crea el render
+const contenedorProductos= document.getElementById("contenedorProductos");
+let renderProductos ="";
+
+//crear las cards según categoría
+
+listaProductos.forEach(element => {
+    renderProductos += `
+        <div class="col-4 productCard">
+            <div class="productCardImg">
+            </div>
+            <div class="productCardInfo">
+                <h6 class="productName">${element.nombre}</h6>
+                <h5 class="productPrice">${element.valor}</h5>
+            </div>
+        </div>
+    `
+});
+contenedorProductos.innerHTML=renderProductos;
 
 
 
 
+
+
+// Aqui vamos a llamar a cada categoría
+/* for(let i = 0; i < categorias.length; i++){
+    console.log(categorias[i]);
+} */
+
+
+/* 
 // este es el menú
 let opcion = parseInt(prompt(`Ingresa al menú que prefieres: \n 1- para ${categorias[0]} \n 2- para ${categorias[1]} \n 3- para ${categorias[2]}\n 0- para salir`));
 
@@ -103,6 +185,8 @@ while (opcion<0||opcion>3){
     alert("opción no válida")
     opcion = parseInt(prompt(`Ingresa al menú que prefieres: \n 1- para ${categorias[0]} \n 2- para ${categorias[1]} \n 3- para ${categorias[2]}\n 0- para salir`));
 }
+
+
 
 
 //Cuando sí selecciona una opción válida
@@ -130,5 +214,4 @@ while(opcion!=0){
     }
     opcion = parseInt(prompt(`Ingresa al menú que prefieres: \n 1- para ${categorias[0]} \n 2- para ${categorias[1]} \n 3- para ${categorias[2]}\n 0- para salir`));
 }
-
-$('.collapse').collapse()
+ */
