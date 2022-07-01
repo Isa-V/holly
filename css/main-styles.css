@@ -1,0 +1,31 @@
+.headerSection{
+    padding: 3%;
+}
+.menuFiltros {
+    padding: 20px;
+}
+.seccionProductos{
+    padding-bottom: 150px;
+}
+
+.productCard{
+    background-color: rgb(255, 255, 255);
+}
+.productCardImg{
+    height: 400px;
+    background-color: cornflowerblue;
+}
+.productCardInfo{
+    padding: 10px;
+} 
+.productName{
+    margin-bottom: 10px;
+}
+.productCard :hover{
+    cursor: pointer;
+}
+.productFavoriteButton {
+    width: 25px;
+}
+
+
