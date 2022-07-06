@@ -1,4 +1,4 @@
-
+//Productos
 const listaProductos = [
     {
         id: 1,
@@ -47,8 +47,8 @@ const listaProductos = [
 // Categorías
 const categorias = ["Tops","Bottoms","Zapatos"];
 
-//Escribir aquí para identificar la selección
-let seleccion = "Bottoms";
+//Identificar la selección
+let seleccion = "Tops";
 
 //Carrito de compras
 let carrito = [];
@@ -56,7 +56,7 @@ let carrito = [];
 let total = 0;
 
 //filtrar y mostrar productos dentro de los objetos presentes en el Array
-const filtrarCategoria = listaProductos.filter(producto=>producto.categoria===seleccion);
+let filtrarCategoria = listaProductos.filter(producto=>producto.categoria===seleccion);
 
 //Conectar las categorías con el menú
 const menuCategorias = document.getElementById("callToCategorias");
@@ -66,12 +66,26 @@ let cantidadCategorias = "";
 categorias.forEach(element => {
         cantidadCategorias += `
             <li class="nav-item">
-                <a class="nav-link " href="#" >${element}</a>
+                <a class="nav-link categoria" href="#" ref="${element}" >${element}</a>
             </li>
         `
 });
 //crear dentro del html
 menuCategorias.innerHTML=cantidadCategorias;
+
+
+
+//Seleccionar categoría haciendo clic en el menu
+const buttonCategorias = document.querySelectorAll(".categoria");
+// Seleccionar categoría
+const selectCategoria = (el)=> {
+    seleccion = el.target.getAttribute("ref");
+    console.log(seleccion);
+    //filtrar y mostrar productos dentro de los objetos presentes en el Array
+}
+buttonCategorias.forEach(categoria => categoria.addEventListener("click", selectCategoria));
+
+
 
 //Cambiar el titulo de la pagina segun categoria seleccionada
 const productTitle = document.getElementById("productTitle");
@@ -82,12 +96,10 @@ const contenedorProductos= document.getElementById("contenedorProductos");
 let renderProductos ="";
 
 //crear las cards según categoría
-
 filtrarCategoria.forEach(element => {
     renderProductos += `
-        <div class="col-4 productCard">
-            <div class="productCardImg">
-            </div>
+        <div class="col-4 productCard item" id="${element.id}" ref ="${element.categoria}">
+            <div class="productCardImg"></div>
             <div class="productCardInfo">
                 <h6 class="productName">${element.nombre}</h6>
                 <h5 class="productPrice">${element.valor}</h5>
@@ -96,3 +108,16 @@ filtrarCategoria.forEach(element => {
     `
 });
 contenedorProductos.innerHTML=renderProductos;
+
+/* // agregar al carrito
+const clicKToItem = (e) => {
+    console.log(e.target.getAttribute("id"));
+}
+
+const items = document.querySelectorAll(".item");
+items.forEach(item=>item.addEventListener("click", clicKToItem));
+ */
+
+
+
+
