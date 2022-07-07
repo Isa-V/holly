@@ -81,7 +81,7 @@ const buttonCategorias = document.querySelectorAll(".categoria");
 const selectCategoria = (el)=> {
     seleccion = el.target.getAttribute("ref");
     console.log(seleccion);
-    //filtrar y mostrar productos dentro de los objetos presentes en el Array
+    filtrarCategoria = listaProductos.filter(producto=>producto.categoria===seleccion);
 }
 buttonCategorias.forEach(categoria => categoria.addEventListener("click", selectCategoria));
 
@@ -109,14 +109,14 @@ filtrarCategoria.forEach(element => {
 });
 contenedorProductos.innerHTML=renderProductos;
 
-/* // agregar al carrito
+// agregar al carrito
 const clicKToItem = (e) => {
-    console.log(e.target.getAttribute("id"));
+    console.log(parseInt(e.target.getAttribute("id")));
 }
 
 const items = document.querySelectorAll(".item");
 items.forEach(item=>item.addEventListener("click", clicKToItem));
- */
+
 
 
 
