@@ -122,7 +122,6 @@ const buttonCategorias = document.querySelectorAll(".categoria");
 //cambiar valor de la variable cuando hago clic
 const selectCategoria = (el)=> {
     seleccion = el.target.getAttribute("ref");
-    console.log(seleccion);
 }
 buttonCategorias.forEach(categoria => categoria.addEventListener("click", selectCategoria));
 
@@ -135,6 +134,12 @@ const filtrar = () => {
     renderProductos(filtroCategorias(listaProductos, seleccion), contenedorProductos)
 }
 buttonCategorias.forEach(categoria => categoria.addEventListener("click", filtrar));
+
+//Cambiar texto del menu
+const cambiarTexto = () => {
+    return productTitle.innerText= seleccion;
+}
+buttonCategorias.forEach(categoria => categoria.addEventListener("click", cambiarTexto));
 
 
 
