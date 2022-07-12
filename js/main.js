@@ -5,35 +5,106 @@ const listaProductos = [
         nombre:"Polera", 
         categoria: "Tops",
         valor:15000,
-        imagen:"/img/img-pantalon.webp"
+        imagen:"/img/img-pantalon.webp",
+        imgSecuntarias:
+        {
+            img1:"/img/img-pantalon.webp",
+            img2:"/img/img-pantalon.webp",
+            img3:"/img/img-pantalon.webp"
+        },
+        tallas:
+        {
+            tallaXS:"XS",
+            tallaS:"S",
+            tallaM:"M",
+            tallaL:"L",
+            tallaXL:"XL"
+        }
     },
     {
         id:2,
         nombre:"Camisa", 
         categoria: "Tops", 
         valor:150,
-        imagen:"/img/img-pantalon.webp"
+        imagen:"/img/img-pantalon.webp",
+        imgSecuntarias:
+        {
+            img1:"/img/img-pantalon.webp",
+            img2:"/img/img-pantalon.webp",
+            img3:"/img/img-pantalon.webp"
+        },
+        tallas:
+        {
+            tallaXS:"XS",
+            tallaS:"S",
+            tallaM:"M",
+            tallaL:"L",
+            tallaXL:"XL"
+        }
+        
     },
     {
         id:3,
         nombre:"Pantalón", 
         categoria: "Bottoms", 
         valor:200,
-        imagen:"/img/img-pantalon.webp"
+        imagen:"/img/img-pantalon.webp",
+        imgSecuntarias:
+        {
+            img1:"/img/img-pantalon.webp",
+            img2:"/img/img-pantalon.webp",
+            img3:"/img/img-pantalon.webp"
+        },
+        tallas:
+        {
+            tallaXS:"XS",
+            tallaS:"S",
+            tallaM:"M",
+            tallaL:"L",
+            tallaXL:"XL"
+        }
     },
     {
         id:4,
         nombre:"Falda", 
         categoria: "Bottoms", 
         valor:250,
-        imagen:"/img/img-pantalon.webp"
+        imagen:"/img/img-pantalon.webp",
+        imgSecuntarias:
+        {
+            img1:"/img/img-pantalon.webp",
+            img2:"/img/img-pantalon.webp",
+            img3:"/img/img-pantalon.webp"
+        },
+        tallas:
+        {
+            tallaXS:"XS",
+            tallaS:"S",
+            tallaM:"M",
+            tallaL:"L",
+            tallaXL:"XL"
+        }
     },
     {
         id:5,
         nombre:"Botín", 
         categoria: "Zapatos", 
         valor:300,
-        imagen:"/img/img-pantalon.webp"
+        imagen:"/img/img-pantalon.webp",
+        imgSecuntarias:
+        {
+            img1:"/img/img-pantalon.webp",
+            img2:"/img/img-pantalon.webp",
+            img3:"/img/img-pantalon.webp"
+        },
+        tallas:
+        {
+            tallaXS:"36",
+            tallaS:"37",
+            tallaM:"38",
+            tallaL:"39",
+            tallaXL:"40"
+        }
     },
     {
         id:6,
@@ -41,6 +112,20 @@ const listaProductos = [
         categoria: "Zapatos", 
         valor:350,
         imagen:"/img/img-pantalon.webp",
+        imgSecuntarias:
+        {
+            img1:"/img/img-pantalon.webp",
+            img2:"/img/img-pantalon.webp",
+            img3:"/img/img-pantalon.webp"
+        },
+        tallas:
+        {
+            tallaXS:"36",
+            tallaS:"37",
+            tallaM:"38",
+            tallaL:"39",
+            tallaXL:"40"
+        }
     },
 ]
 
