@@ -17,11 +17,11 @@
     min-width: 300px;
     max-width: 320px;
     padding: 0;
+
 }
 .productCardImg{
     height: 350px;
-
-    background-color: cornflowerblue;
+/*     background-color: cornflowerblue; */
 }
 .productCardInfo{
     padding: 10px;
@@ -29,16 +29,38 @@
 .productName{
     margin-bottom: 10px;
 }
-.productCard :hover{
+.productCardImg:hover{
     cursor: pointer;
 }
 .productFavoriteButton {
     width: 25px;
 }
-
 .cardsContainter{
     display: flex;
     justify-content: left;
+}
+
+
+/* --- ventana con detalles --- */
+.productInfo{
+    margin: 10px,30px,10px,30px;
+}
+.productInfo_thumbs{
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.productInfo_bigImg{
+    width: 100%;
+}
+.productInfo_details{
+    background-color: aquamarine;
+}
+.productInfo_smallImg{
+    width: 50%;
+    margin-bottom: 10px;
+
 }
 
 @media (max-width:540px) {

@@ -5,42 +5,42 @@ const listaProductos = [
         nombre:"Polera", 
         categoria: "Tops",
         valor:15000,
-        imagen:""
+        imagen:"/img/img-pantalon.webp"
     },
     {
         id:2,
         nombre:"Camisa", 
         categoria: "Tops", 
         valor:150,
-        imagen:""
+        imagen:"/img/img-pantalon.webp"
     },
     {
         id:3,
         nombre:"Pantalón", 
         categoria: "Bottoms", 
         valor:200,
-        imagen:""
+        imagen:"/img/img-pantalon.webp"
     },
     {
         id:4,
         nombre:"Falda", 
         categoria: "Bottoms", 
         valor:250,
-        imagen:""
+        imagen:"/img/img-pantalon.webp"
     },
     {
         id:5,
         nombre:"Botín", 
         categoria: "Zapatos", 
         valor:300,
-        imagen:""
+        imagen:"/img/img-pantalon.webp"
     },
     {
         id:6,
         nombre:"Bota", 
         categoria: "Zapatos", 
         valor:350,
-        imagen:"",
+        imagen:"/img/img-pantalon.webp",
     },
 ]
 
@@ -74,8 +74,16 @@ productTitle.innerText= seleccion;
 
 //Carrito de compras
 let carrito = [];
+//Poner el carrito en un Json dentro del local storage
+localStorage.setItem("carroCompra", JSON.stringify.carrito);
+
 //Suma el precio total
 let total = 0;
+
+//contar productos del carrito reflejarlos en el contador
+console.log(carrito.length)
+const carritoCounter = document.getElementById("carritoCounter");
+carritoCounter.innerText = carrito.length;
 
 
 // encontrar el contenedor de los productos por Id
@@ -86,47 +94,47 @@ const renderProductos = (productos, target) => {
     let sumaProductos = "";
     productos.map(producto => {
         sumaProductos += `
-        <div class="col-4 productCard item" id="${producto.id}" ref ="${producto.categoria}">
-            <div class="productCardImg"></div>
+        <div class="col-4 productCard">
+            <img src="${producto.imagen}" id="${producto.id}" ref ="${producto.categoria}" class="productCardImg buttonCard" alt="">
             <div class="productCardInfo">
                 <h6 class="productName">${producto.nombre}</h6>
-                <h5 class="productPrice">${producto.valor}</h5>
+                <h5 class="productPrice">$${producto.valor}</h5>
+            </div>
+            <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="button">Añadir al carro</button>
             </div>
         </div>
         `
     })
-
+    //agregar los productos al contenedor
     target.innerHTML = sumaProductos;
+
+    //Reconocer el producto para ver mas detalles
+    const buttonsProduct = document.querySelectorAll(".buttonCard");
+    buttonsProduct.forEach(buttonProduct => buttonProduct.addEventListener("click", productClic));
 }
-// conectar la función con el array de productos y el contenedor
+// crear funcion para hacer clic en el producto
+const productClic = (e) =>{
+    const idProducto = parseInt(e.target.getAttribute("id"));
+    const producto = listaProductos.find(producto => producto.id === idProducto);
+    console.log(producto);
+}
+
+// conectar la función con el array de productos y el contenedor filtrando segun la categoria seleccionada
 renderProductos(listaProductos.filter(producto=> producto.categoria==seleccion), contenedorProductos);
-
-
-/* //Seleccionar categoría haciendo clic en el menu
-const buttonCategorias = document.querySelectorAll(".categoria");
-// Seleccionar categoría
-const selectCategoria = (el)=> {
-    seleccion = el.target.getAttribute("ref");
-    console.log(seleccion);
-
-}
-buttonCategorias.forEach(categoria => categoria.addEventListener("click", selectCategoria));
- */
-
 
 
 
 //conectar con la class categoria
 const buttonCategorias = document.querySelectorAll(".categoria");
 
-//cambiar valor de la variable cuando hago clic
+//cambiar valor de la variable de la categoria seleccionada cuando hago clic
 const selectCategoria = (el)=> {
     seleccion = el.target.getAttribute("ref");
 }
 buttonCategorias.forEach(categoria => categoria.addEventListener("click", selectCategoria));
 
-
-//Filtrar productos por categoria
+//Filtrar productos por categoria seleccionada
 const filtroCategorias = (listado, categoria) =>{
     return listado.filter(producto => producto.categoria==categoria)
 }
@@ -135,53 +143,8 @@ const filtrar = () => {
 }
 buttonCategorias.forEach(categoria => categoria.addEventListener("click", filtrar));
 
-//Cambiar texto del menu
+//Cambiar texto del menu segun categoría seleccionada
 const cambiarTexto = () => {
     return productTitle.innerText= seleccion;
 }
 buttonCategorias.forEach(categoria => categoria.addEventListener("click", cambiarTexto));
-
-
-
-
-
-/* const menuButton = document.getElementsByClassName("categoria"); */
-
-
-
-
-
-/* 
-//filtrar y mostrar productos dentro de los objetos presentes en el Array
-let filtrarCategoria = listaProductos.filter(producto=>producto.categoria===seleccion); */
-
-/* // se vincula el contenedor de los productos y se crea el render
-const contenedorProductos= document.getElementById("contenedorProductos");
-let renderProductos ="";
-
-//crear las cards según categoría
-filtrarCategoria.forEach(element => {
-    renderProductos += `
-        <div class="col-4 productCard item" id="${element.id}" ref ="${element.categoria}">
-            <div class="productCardImg"></div>
-            <div class="productCardInfo">
-                <h6 class="productName">${element.nombre}</h6>
-                <h5 class="productPrice">${element.valor}</h5>
-            </div>
-        </div>
-    `
-});
-contenedorProductos.innerHTML=renderProductos;
-
-// agregar al carrito
-const clicKToItem = (e) => {
-    console.log(parseInt(e.target.getAttribute("id")));
-}
-
-const items = document.querySelectorAll(".item");
-items.forEach(item=>item.addEventListener("click", clicKToItem));
- */
-
-
-
-
