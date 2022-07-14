@@ -11,13 +11,11 @@
 .seccionProductos{
     padding-bottom: 150px;
 }
-
 .productCard{
     background-color: rgb(255, 255, 255);
     min-width: 300px;
     max-width: 320px;
     padding: 0;
-
 }
 .productCardImg{
     height: 350px;

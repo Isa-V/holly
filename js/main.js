@@ -140,7 +140,7 @@ let cantidadCategorias = "";
 categorias.forEach(element => {
         cantidadCategorias += `
             <li class="nav-item">
-                <a class="nav-link categoria" href="#" ref="${element}" >${element}</a>
+                <a class="nav-link categoria" href="#" ref="${element}">${element}</a>
             </li>
         `
 });
@@ -153,28 +153,29 @@ menuCategorias.innerHTML=cantidadCategorias;
 let seleccion = "Tops";
 //Cambiar el titulo de la pagina segun categoria seleccionada
 const productTitle = document.getElementById("productTitle");
-productTitle.innerText= seleccion;
+productTitle ? productTitle.innerText = seleccion : null;
+//guardar en el storage la seleccion realizada
 
 
 
-//Carrito de compras
-let carrito = [];
-//Poner el carrito en un Json dentro del local storage
-localStorage.setItem("carroCompra", JSON.stringify.carrito);
+//Carrito de compras en el local storage
+let carrito = JSON.parse(localStorage.getItem("carrito")|| "[]")
 
 //Suma el precio total
 let total = 0;
 
-//contar productos del carrito reflejarlos en el contador
+//contar productos del carrito reflejarlos en el contador del carro de compra
 console.log(carrito.length)
 const carritoCounter = document.getElementById("carritoCounter");
-carritoCounter.innerText = carrito.length;
+carritoCounter ? carritoCounter.innerText = carrito.length: carritoCounter.innerText ="0";
 
 
 // encontrar el contenedor de los productos por Id
 const contenedorProductos= document.getElementById("contenedorProductos");
 
-//Agregar productos al contenedor
+
+//Agregar productos al contenedor solo si estamos en la pagina de productos
+
 const renderProductos = (productos, target) => {
     let sumaProductos = "";
     productos.map(producto => {
@@ -192,26 +193,35 @@ const renderProductos = (productos, target) => {
         `
     })
     //agregar los productos al contenedor
-    target.innerHTML = sumaProductos;
+    target ? target.innerHTML = sumaProductos: null;
 
     //Reconocer el producto para ver mas detalles
     const buttonsProduct = document.querySelectorAll(".buttonCard");
     buttonsProduct.forEach(buttonProduct => buttonProduct.addEventListener("click", productClic));
 }
+
+// identificar el producto que se debe mostrar después de hacer clic en la proxima pestaña y guardarla en el local storage para que se mantenga en la proxima pestaña
+let productShow = JSON.parse(localStorage.getItem("productShow")|| "[]")
+
 // crear funcion para hacer clic en el producto
 const productClic = (e) =>{
     const idProducto = parseInt(e.target.getAttribute("id"));
     const producto = listaProductos.find(producto => producto.id === idProducto);
-    console.log(producto);
+
+    //identificar el producto seleccionado
+    carrito.push(producto);
+    localStorage.setItem("carrito",JSON.stringify(carrito));
+
 }
+
+
 
 // conectar la función con el array de productos y el contenedor filtrando segun la categoria seleccionada
 renderProductos(listaProductos.filter(producto=> producto.categoria==seleccion), contenedorProductos);
 
-
-
 //conectar con la class categoria
 const buttonCategorias = document.querySelectorAll(".categoria");
+
 
 //cambiar valor de la variable de la categoria seleccionada cuando hago clic
 const selectCategoria = (el)=> {
@@ -233,3 +243,7 @@ const cambiarTexto = () => {
     return productTitle.innerText= seleccion;
 }
 buttonCategorias.forEach(categoria => categoria.addEventListener("click", cambiarTexto));
+
+
+
+// agregar productos en la nueva pestana
