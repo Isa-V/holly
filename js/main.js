@@ -211,7 +211,7 @@ const productClic = (e) =>{
     //identificar el producto seleccionado
     carrito.push(producto);
     localStorage.setItem("carrito",JSON.stringify(carrito));
-
+    carritoCounter.innerText = carrito.length
 }
 
 
