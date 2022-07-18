@@ -291,7 +291,8 @@ productTitle ? productTitle.innerText = seleccion : null;
 
 //Carrito de compras en el local storage
 let carrito = JSON.parse(localStorage.getItem("carrito")|| "[]")
-let carritoCantidad = carrito.length;
+//contar la cantidad de elementos del carrito
+let carritoCantidad = carrito.map(producto=> producto.cantidad).reduce((prev,curr)=> prev+curr,0);
 
 //Suma el precio total
 let total = 0;
@@ -374,7 +375,6 @@ const productClic = (e) =>{
     if(carrito.some(element => element.id===producto.id)){
         const repetido = carrito.findIndex(element=> element.id === producto.id);
         carrito[repetido].cantidad +=1;
-        carritoCantidad += 1;
     } else{
         carrito.push({
             id: producto.id,
@@ -386,13 +386,19 @@ const productClic = (e) =>{
     }
     //identificar el producto seleccionado
     localStorage.setItem("carrito",JSON.stringify(carrito));
-    carritoCounter.innerText = carrito.length;
-    console.log(carrito);
     rendercarrito(carrito, contenedorCarrito);
+    //actualizar el valor que se muestra en el contador de elementos del carrito:
+    carritoCantidad = carrito.map(producto=> producto.cantidad).reduce((prev,curr)=> prev+curr,0);
+    carritoCounter.innerText = carritoCantidad;
 }
 
 // conectar la función con el array de productos y el contenedor filtrando segun la categoria seleccionada
 renderProductos(listaProductos.filter(producto=> producto.categoria==seleccion), contenedorProductos);
+
+
+
+
+
 
 
 
