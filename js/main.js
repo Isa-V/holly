@@ -394,6 +394,7 @@ const productClic = (e) =>{
     carritoCounter.innerText = carritoCantidad;
     //actualizar cantidad en el modal del carrito:
     carritoModalItems.innerHTML = (carritoCantidad+" items");
+    sweetAlert()
 }
 
 // conectar la función con el array de productos y el contenedor filtrando segun la categoria seleccionada
@@ -460,6 +461,29 @@ const rendercarrito = (productos, target) => {
 // renderizar los productos en el carro
 rendercarrito(carrito, contenedorCarrito);
 carritoModalItems ? carritoModalItems.innerHTML = (carritoCantidad+" items") : carritoModalItems.innerHTML ="0 items";
+
+//conectar el DOM con el modal del carrito:
+const myModal = new bootstrap.Modal(document.getElementById("carritoModal"), {});
+
+//sweet alert de Toastify
+const sweetAlert = () => {
+    Toastify({
+        text: "Agregaste un producto al carrito",
+        duration: 2000,
+        newWindow: true,
+        close: true,
+        gravity: "bottom", // `top` or `bottom`
+        position: "center", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "#000",
+            color:"#fff"
+        },
+        onClick: () => myModal.show(), //abre el carrito si se hace clic
+    }).showToast();
+}
+
+
 
 
 
