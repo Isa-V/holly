@@ -278,7 +278,6 @@ categorias.forEach(element => {
 //crear categorias dentro del html
 menuCategorias.innerHTML=cantidadCategorias;
 
-/* --- IDENTIFICAR CATEGORIAS --- */
 
 //Identificar la selección
 let seleccion = "Tops";
@@ -415,10 +414,10 @@ const calcularTotal = () => {
     carrito.forEach(producto=>{
         total+= producto.valor*producto.cantidad;
     })
-    console.log(total);
+    console.log(total)
     carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
-}
 
+}
 
 // mostrar productos en el carrito
 const rendercarrito = (productos, target) => {
@@ -457,12 +456,10 @@ const rendercarrito = (productos, target) => {
     target ? target.innerHTML = sumaProductos: null;
     calcularTotal()
 }
+
 // renderizar los productos en el carro
 rendercarrito(carrito, contenedorCarrito);
-
-
-
-carritoModalItems ? carritoModalItems.innerHTML = (carritoCantidad+" items") : 0;
+carritoModalItems ? carritoModalItems.innerHTML = (carritoCantidad+" items") : carritoModalItems.innerHTML ="0 items";
 
 
 
