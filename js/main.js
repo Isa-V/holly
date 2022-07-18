@@ -260,7 +260,7 @@ const listaProductos = [
     },
 ]
 
-
+/* --- IDENTIFICAR LAS CATEGORIAS --- */
 // Categorías
 const categorias = ["Tops","Bottoms","Zapatos"];
 //Conectar las categorías con el menú
@@ -278,7 +278,7 @@ categorias.forEach(element => {
 //crear categorias dentro del html
 menuCategorias.innerHTML=cantidadCategorias;
 
-
+/* --- IDENTIFICAR CATEGORIAS --- */
 
 //Identificar la selección
 let seleccion = "Tops";
@@ -293,20 +293,18 @@ productTitle ? productTitle.innerText = seleccion : null;
 let carrito = JSON.parse(localStorage.getItem("carrito")|| "[]")
 //contar la cantidad de elementos del carrito
 let carritoCantidad = carrito.map(producto=> producto.cantidad).reduce((prev,curr)=> prev+curr,0);
+//valor del total de la compra
 
-//Suma el precio total
-let total = 0;
+
 
 //contar productos del carrito reflejarlos en el contador del carro de compra
 const carritoCounter = document.getElementById("carritoCounter");
 carritoCounter ? carritoCounter.innerText = carritoCantidad: carritoCounter.innerText ="0";
 
-
 /* --- AGREGAR UN PUNTO CADA 3 DIGITOS A LOS PRECIOS --- */
 function preciosConPunto(valor) {
     return valor.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
-
 
 
 /* ---- MENU Y FILTRADO POR CATEGORIA --- */
@@ -335,11 +333,15 @@ const cambiarTexto = () => {
 buttonCategorias.forEach(categoria => categoria.addEventListener("click", cambiarTexto));
 
 
-
-/* --- RENDERIZAR PRODUCTOS POR CATEGORIA --- */
-
+/* ---LINKEAR CON ELEMENTOS DEL DOM --* */
 // encontrar el contenedor de los productos por Id
 const contenedorProductos= document.getElementById("contenedorProductos");
+
+
+
+
+
+/* --- RENDERIZAR PRODUCTOS POR CATEGORIA --- */
 
 //Agregar productos al contenedor
 const renderProductos = (productos, target) => {
@@ -384,12 +386,15 @@ const productClic = (e) =>{
             cantidad:1,
         });
     }
+
     //identificar el producto seleccionado
     localStorage.setItem("carrito",JSON.stringify(carrito));
     rendercarrito(carrito, contenedorCarrito);
     //actualizar el valor que se muestra en el contador de elementos del carrito:
     carritoCantidad = carrito.map(producto=> producto.cantidad).reduce((prev,curr)=> prev+curr,0);
     carritoCounter.innerText = carritoCantidad;
+    //actualizar cantidad en el modal del carrito:
+    carritoModalItems.innerHTML = (carritoCantidad+" items");
 }
 
 // conectar la función con el array de productos y el contenedor filtrando segun la categoria seleccionada
@@ -397,14 +402,23 @@ renderProductos(listaProductos.filter(producto=> producto.categoria==seleccion),
 
 
 
-
-
-
-
-
 /* --- RENDERIZAR PRODUCTOS EN EL CARRITO */
 //encontar el contenedor de productos en el carrito
 const contenedorCarrito= document.getElementById("contenedorProductosCarrito");
+//Encontrar los elementos del footer del modal del carrito
+const carritoModalTotal = document.getElementById("carritoModalTotal");
+const carritoModalItems = document.getElementById("carritoModalItems");
+
+
+const calcularTotal = () => {
+    let total = 0;
+    carrito.forEach(producto=>{
+        total+= producto.valor*producto.cantidad;
+    })
+    console.log(total);
+    carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
+}
+
 
 // mostrar productos en el carrito
 const rendercarrito = (productos, target) => {
@@ -441,9 +455,17 @@ const rendercarrito = (productos, target) => {
     })
     //agregar los productos al contenedor
     target ? target.innerHTML = sumaProductos: null;
+    calcularTotal()
 }
 // renderizar los productos en el carro
 rendercarrito(carrito, contenedorCarrito);
+
+
+
+carritoModalItems ? carritoModalItems.innerHTML = (carritoCantidad+" items") : 0;
+
+
+
 
 
 
