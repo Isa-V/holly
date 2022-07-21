@@ -491,11 +491,11 @@ const compraProductoAlert = () => {
         newWindow: true,
         close: true,
         gravity: "bottom", // `top` or `bottom`
-        position: "center", // `left`, `center` or `right`
+        position: "right", // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
-            background: "#000",
-            color:"#fff"
+            background: "#FFCFED",
+            color:"#000"
         },
         onClick: () => myModal.show(), //abre el carrito si se hace clic
     }).showToast();
@@ -507,14 +507,14 @@ const randomIntervalTimer = (min, max) => { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 let randomInt = randomIntervalTimer(30000, 50000);
-setInterval (compraProductoAlert,randomInt);
+setInterval (compraProductoAlert, randomInt);
 
-//cambiar el tiempo del mensaje
+/* //cambiar el tiempo del mensaje
 const cambiarValor = () => {
     randomInt = randomIntervalTimer(30000, 50000);
     console.log(randomInt);
 }
-setInterval (cambiarValor,randomInt)
+setInterval (cambiarValor,randomInt) */
 
 
 
