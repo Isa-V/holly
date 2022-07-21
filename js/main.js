@@ -337,9 +337,6 @@ buttonCategorias.forEach(categoria => categoria.addEventListener("click", cambia
 const contenedorProductos= document.getElementById("contenedorProductos");
 
 
-
-
-
 /* --- RENDERIZAR PRODUCTOS POR CATEGORIA --- */
 
 //Agregar productos al contenedor
@@ -394,6 +391,7 @@ const productClic = (e) =>{
     carritoCounter.innerText = carritoCantidad;
     //actualizar cantidad en el modal del carrito:
     carritoModalItems.innerHTML = (carritoCantidad+" items");
+    // agregar alert
     sweetAlert()
 }
 
@@ -417,7 +415,6 @@ const calcularTotal = () => {
     })
     console.log(total)
     carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
-
 }
 
 // mostrar productos en el carrito
@@ -465,7 +462,9 @@ carritoModalItems ? carritoModalItems.innerHTML = (carritoCantidad+" items") : c
 //conectar el DOM con el modal del carrito:
 const myModal = new bootstrap.Modal(document.getElementById("carritoModal"), {});
 
-//sweet alert de Toastify
+
+
+/* --- SWEET ALERT DE TOASTIFY--- */
 const sweetAlert = () => {
     Toastify({
         text: "Agregaste un producto al carrito",
@@ -482,6 +481,42 @@ const sweetAlert = () => {
         onClick: () => myModal.show(), //abre el carrito si se hace clic
     }).showToast();
 }
+
+/* --- USO DE SETINTERVAL PARA INCENTIVAR LA COMPRA --- */
+// agregar un alert cada X tiempo para mostrar que se están llevando los productos
+const compraProductoAlert = () => {
+    Toastify({
+        text: "Andrés acaba de comprar Cardigan, no te quedes sin el tuyo",
+        duration: 4000,
+        newWindow: true,
+        close: true,
+        gravity: "bottom", // `top` or `bottom`
+        position: "center", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "#000",
+            color:"#fff"
+        },
+        onClick: () => myModal.show(), //abre el carrito si se hace clic
+    }).showToast();
+}
+
+// funcion para que el tiempo en que salga el alert sea aleatorio
+
+const randomIntervalTimer = (min, max) => { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+let randomInt = randomIntervalTimer(30000, 50000);
+setInterval (compraProductoAlert,randomInt);
+
+//cambiar el tiempo del mensaje
+const cambiarValor = () => {
+    randomInt = randomIntervalTimer(30000, 50000);
+    console.log(randomInt);
+}
+setInterval (cambiarValor,randomInt)
+
+
 
 
 
