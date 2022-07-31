@@ -1,0 +1,175 @@
+{
+    "listaProductos": [
+    {
+        "id": 1,
+        "nombre":"Cárdigan largo de color combinado", 
+        "categoria": "Tops",
+        "valor":15590,
+        "imagen":"img/cardigan1-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/cardigan1-img-a.webp",
+            "img2":"img/cardigan1-img-b.webp",
+            "img3":"img/cardigan1-img-c.webp"
+        },
+        "tallas": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "id":2,
+        "nombre":"Cardigan nubes patrón", 
+        "categoria": "Tops", 
+        "valor":17290,
+        "imagen":"img/cardigan2-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/cardigan2-img-a.webp",
+            "img2":"img/cardigan2-img-b.webp",
+            "img3":"img/cardigan2-img-c.webp"
+        },
+        "tallas": ["XS", "S", "M", "L", "XL"]
+        
+    },
+    {
+        "id":3,
+        "nombre":"Cardigan flecos", 
+        "categoria": "Tops", 
+        "valor":15000,
+        "imagen":"img/cardigan3-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/cardigan3-img-a.webp",
+            "img2":"img/cardigan3-img-b.webp",
+            "img3":"img/cardigan3-img-c.webp"
+        },
+        "tallas": ["XS", "S", "M", "L", "XL"]
+        
+    },
+    {
+        "id":4,
+        "nombre":"Cardigan nudo hombos caídos", 
+        "categoria": "Tops", 
+        "valor":14000,
+        "imagen":"img/cardigan4-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/cardigan4-img-a.webp",
+            "img2":"img/cardigan4-img-b.webp",
+            "img3":"img/cardigan4-img-c.webp"
+        },
+        "tallas": ["XS", "S", "M", "L", "XL"]
+        
+    },
+    {
+        "id":5,
+        "nombre":"Falda plisada con cuadros", 
+        "categoria": "Bottoms", 
+        "valor":12900,
+        "imagen":"img/bottom1-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/bottom1-img-a.webp",
+            "img2":"img/bottom1-img-b.webp",
+            "img3":"img/bottom1-img-c.webp"
+        },
+        "tallas": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "id":6,
+        "nombre":"Calza negra pitillo", 
+        "categoria": "Bottoms", 
+        "valor":7990,
+        "imagen":"img/bottom2-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/bottom2-img-a.webp",
+            "img2":"img/bottom2-img-b.webp",
+            "img3":"img/bottom2-img-c.webp"
+        },
+        "tallas": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "id":7,
+        "nombre":"Falda negra botones", 
+        "categoria": "Bottoms", 
+        "valor":14900,
+        "imagen":"img/bottom3-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/bottom3-img-a.webp",
+            "img2":"img/bottom3-img-b.webp",
+            "img3":"img/bottom3-img-c.webp"
+        },
+        "tallas": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "id":8,
+        "nombre":"Pantalón beige rectos", 
+        "categoria": "Bottoms", 
+        "valor":250,
+        "imagen":"img/bottom4-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/bottom4-img-a.webp",
+            "img2":"img/bottom4-img-b.webp",
+            "img3":"img/bottom4-img-c.webp"
+        },
+        "tallas": ["XS", "S", "M", "L", "XL"]
+    },
+    {
+        "id":9,
+        "nombre":"Zapatilla blanca cordones", 
+        "categoria": "Zapatos", 
+        "valor":22900,
+        "imagen":"img/zapato1-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/zapato1-img-a.webp",
+            "img2":"img/zapato1-img-b.webp",
+            "img3":"img/zapato1-img-c.webp"
+        },
+        "tallas": ["36", "37", "38", "39", "40"]
+    },
+    {
+        "id":10,
+        "nombre":"Bota pierna completa", 
+        "categoria": "Zapatos", 
+        "valor":28900,
+        "imagen":"img/zapato2-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/zapato2-img-a.webp",
+            "img2":"img/zapato2-img-b.webp",
+            "img3":"img/zapato2-img-c.webp"
+        },
+        "tallas": ["36", "37", "38", "39", "40"]
+    },
+    {
+        "id":11,
+        "nombre":"Botín negro taco cordones", 
+        "categoria": "Zapatos", 
+        "valor":24000,
+        "imagen":"img/zapato3-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/zapato3-img-a.webp",
+            "img2":"img/zapato3-img-b.webp",
+            "img3":"img/zapato3-img-c.webp"
+        },
+        "tallas": ["36", "37", "38", "39", "40"]
+    },
+    {
+        "id":12,
+        "nombre":"Zapatilla gatito cordones", 
+        "categoria": "Zapatos", 
+        "valor":27900,
+        "imagen":"img/zapato4-img-a.webp",
+        "imgSecuntarias":
+        {
+            "img1":"img/zapato4-img-a.webp",
+            "img2":"img/zapato4-img-b.webp",
+            "img3":"img/zapato4-img-c.webp"
+        },
+        "tallas": ["36", "37", "38", "39", "40"]
+    }
+    ]
+}
