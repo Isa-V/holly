@@ -1,6 +1,4 @@
-//Productos
-
-
+let listaProductos = [];
 /* --- IDENTIFICAR LAS CATEGORIAS --- */
 // Categorías
 const categorias = ["Tops","Bottoms","Zapatos"];
@@ -97,7 +95,7 @@ const renderProductos = (productos, target) => {
     //agregar los productos al contenedor
     target ? target.innerHTML = sumaProductos: null;
 
-    //Reconocer el producto para ver mas detalles
+    //hacer clic en el producto
     const buttonsProduct = document.querySelectorAll(".buttonCard");
     buttonsProduct.forEach(buttonProduct => buttonProduct.addEventListener("click", productClic));
 }
@@ -136,8 +134,23 @@ const productClic = (e) =>{
     sweetAlert()
 }
 
-// conectar la función con el array de productos y el contenedor filtrando segun la categoria seleccionada
-renderProductos(listaProductos.filter(producto=> producto.categoria==seleccion), contenedorProductos);
+
+
+/* ---- FETCH CON EL LISTADO DE PRODUCTOS ---- */
+//funcion para traer a los productos desde el json
+const llamarJSON = () =>{
+    const respuesta = fetch("./js/productos.json")
+    respuesta
+    .then(res => res.json())
+    .then((res)=>{
+        listaProductos = res.productos;
+        console.log(listaProductos)
+        
+        // conectar la función con el array de productos y el contenedor filtrando segun la categoria seleccionada
+        renderProductos(listaProductos.filter(producto=> producto.categoria==seleccion), contenedorProductos);
+    })
+}
+llamarJSON()
 
 
 
