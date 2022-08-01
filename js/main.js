@@ -1,4 +1,18 @@
+/* --- URL DE MERCADO PAGO --- */
+const url_api_mercadoPago = "https://api.mercadopago.com";
+const api_key_mercadoPago = "TEST-6731662915555552-073101-9d94594a80fd804ce08aca2f6e495926-185076153";
+
+/* // SDK de Mercado Pago
+const mercadopago = require("mercadopago");
+// Agrega credenciales
+mercadopago.configure({
+    access_token: api_key_mercadoPago,
+}); */
+
+
+/* ---LISTA DE PRODUCTOS --- */
 let listaProductos = [];
+
 /* --- IDENTIFICAR LAS CATEGORIAS --- */
 // Categorías
 const categorias = ["Tops","Bottoms","Zapatos"];
@@ -144,7 +158,6 @@ const llamarJSON = () =>{
     .then(res => res.json())
     .then((res)=>{
         listaProductos = res.productos;
-        console.log(listaProductos)
         
         // conectar la función con el array de productos y el contenedor filtrando segun la categoria seleccionada
         renderProductos(listaProductos.filter(producto=> producto.categoria==seleccion), contenedorProductos);
@@ -263,12 +276,42 @@ const randomIntervalTimer = (min, max) => { // min and max included
 let randomInt = randomIntervalTimer(30000, 50000);
 setInterval (compraProductoAlert, randomInt);
 
-/* //cambiar el tiempo del mensaje
-const cambiarValor = () => {
-    randomInt = randomIntervalTimer(30000, 50000);
-    console.log(randomInt);
+
+/* --- HACER LA COMPRA CON MERCADO PAGO ---  */
+const finalizarCompra = document.getElementById("compra");
+
+
+const comprarMercadoPago = async () => {
+    //configuracion del fetch para mercado pago
+    const configuracionMP = 
+    {
+        method:"post",
+        headers:{
+            "Authorization": `Bearer${api_key_mercadoPago}`,
+            "Content-Type": "application/json",
+            "cache-control": "no-cache"
+        },
+        body:JSON.stringify({
+            "items": [
+            {
+                "title": "Mi producto",
+                "quantity": 3,
+                "unit_price": 1000
+            }
+            ]
+        })
+    }
+    //fetch de la respuesta
+    const respuesta = fetch(`${url_api_mercadoPago}/checkout/preferences`,configuracionMP)
+    respuesta
+    .then(res => res.json())
+    .then((res)=> {
+        console.log(res);
+    })
 }
-setInterval (cambiarValor,randomInt) */
+
+finalizarCompra.addEventListener("click", comprarMercadoPago);
+
 
 
 
