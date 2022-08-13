@@ -7,8 +7,8 @@ const mercadopago = require("mercadopago");
 // Agrega credenciales
 mercadopago.configure({
     access_token: api_key_mercadoPago,
-}); */
-
+});
+ */
 
 /* ---LISTA DE PRODUCTOS --- */
 let listaProductos = [];
@@ -287,7 +287,7 @@ const comprarMercadoPago = async () => {
     {
         method:"post",
         headers:{
-            "Authorization": `Bearer${api_key_mercadoPago}`,
+            "Authorization": `Bearer ${api_key_mercadoPago}`,
             "Content-Type": "application/json",
             "cache-control": "no-cache"
         },
@@ -297,6 +297,11 @@ const comprarMercadoPago = async () => {
                 "title": "Mi producto",
                 "quantity": 3,
                 "unit_price": 1000
+            },
+            {
+                "title": "Mi producto2",
+                "quantity": 2,
+                "unit_price": 3000
             }
             ]
         })
@@ -307,18 +312,11 @@ const comprarMercadoPago = async () => {
     .then(res => res.json())
     .then((res)=> {
         console.log(res);
+        //lleva a pagar en mercado pago
+        if(res.init_point){
+            window.location.href= res.init_point;
+        }
     })
 }
 
 finalizarCompra.addEventListener("click", comprarMercadoPago);
-
-
-
-
-
-
-
-
-
-
-
