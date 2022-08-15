@@ -1,14 +1,7 @@
 /* --- URL DE MERCADO PAGO --- */
 const url_api_mercadoPago = "https://api.mercadopago.com";
-const api_key_mercadoPago = "TEST-6731662915555552-073101-9d94594a80fd804ce08aca2f6e495926-185076153";
+const api_key_mercadoPago = "TEST-3726406462130735-081421-8879f58907ed1d1a4354534fae4255e0-1170351237";
 
-/* // SDK de Mercado Pago
-const mercadopago = require("mercadopago");
-// Agrega credenciales
-mercadopago.configure({
-    access_token: api_key_mercadoPago,
-});
- */
 
 /* ---LISTA DE PRODUCTOS --- */
 let listaProductos = [];
@@ -44,7 +37,7 @@ productTitle ? productTitle.innerText = seleccion : null;
 //Carrito de compras en el local storage
 let carrito = JSON.parse(localStorage.getItem("carrito")|| "[]")
 //contar la cantidad de elementos del carrito
-let carritoCantidad = carrito.map(producto=> producto.cantidad).reduce((prev,curr)=> prev+curr,0);
+let carritoCantidad = carrito.map(producto=> producto.quantity).reduce((prev,curr)=> prev+curr,0);
 //valor del total de la compra
 
 
@@ -91,7 +84,6 @@ const contenedorProductos= document.getElementById("contenedorProductos");
 
 
 /* --- RENDERIZAR PRODUCTOS POR CATEGORIA --- */
-
 //Agregar productos al contenedor
 const renderProductos = (productos, target) => {
     let sumaProductos = "";
@@ -125,14 +117,14 @@ const productClic = (e) =>{
     // agregar productos al carro solo si no está repedido
     if(carrito.some(element => element.id===producto.id)){
         const repetido = carrito.findIndex(element=> element.id === producto.id);
-        carrito[repetido].cantidad +=1;
+        carrito[repetido].quantity +=1;
     } else{
         carrito.push({
             id: producto.id,
-            nombre:producto.nombre, 
-            valor:producto.valor,
+            title:producto.nombre, 
+            unit_price:producto.valor,
             imagen:producto.imagen,
-            cantidad:1,
+            quantity:1,
         });
     }
 
@@ -140,7 +132,7 @@ const productClic = (e) =>{
     localStorage.setItem("carrito",JSON.stringify(carrito));
     rendercarrito(carrito, contenedorCarrito);
     //actualizar el valor que se muestra en el contador de elementos del carrito:
-    carritoCantidad = carrito.map(producto=> producto.cantidad).reduce((prev,curr)=> prev+curr,0);
+    carritoCantidad = carrito.map(producto=> producto.quantity).reduce((prev,curr)=> prev+curr,0);
     carritoCounter.innerText = carritoCantidad;
     //actualizar cantidad en el modal del carrito:
     carritoModalItems.innerHTML = (carritoCantidad+" items");
@@ -174,13 +166,11 @@ const contenedorCarrito= document.getElementById("contenedorProductosCarrito");
 const carritoModalTotal = document.getElementById("carritoModalTotal");
 const carritoModalItems = document.getElementById("carritoModalItems");
 
-
+let total = 0;
 const calcularTotal = () => {
-    let total = 0;
     carrito.forEach(producto=>{
-        total+= producto.valor*producto.cantidad;
+        total+= producto.unit_price*producto.quantity;
     })
-    console.log(total)
     carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
 }
 
@@ -190,18 +180,18 @@ const rendercarrito = (productos, target) => {
     productos.map(producto => {
         sumaProductos += `
         <div class="row carritoModal_producto">
-            <img src="${producto.imagen}" alt="${producto.nombre}" class="col-3">
+            <img src="${producto.imagen}" alt="${producto.title}" class="col-3">
             <div class="col-7">
-                <h5 class="col-9">${producto.nombre}</h5>
+                <h5 class="col-9">${producto.title}</h5>
                 <div class="d-flex gap-4">
                     <h6>Talla: S</h6>
-                    <h6>$${preciosConPunto(producto.valor)} c/u</h6>
+                    <h6>$${preciosConPunto(producto.unit_price)} c/u</h6>
                 </div>
                 <div class="input-group-sm flex-nowrap">
-                    <input type="number" class="carritoModalCantidad" value="${producto.cantidad}">
+                    <input type="number" class="carritoModalCantidad" value="${producto.quantity}">
                 </div>
                 <div class="carritoModalTotal">
-                    <h4>$${preciosConPunto(parseInt(producto.cantidad)*parseInt(producto.valor))}</h4>
+                    <h4>$${preciosConPunto(parseInt(producto.quantity)*parseInt(producto.unit_price))}</h4>
                 </div>
             </div>
             <div class="col-2 d-flex justify-content-center align-items-start">
@@ -280,8 +270,9 @@ setInterval (compraProductoAlert, randomInt);
 /* --- HACER LA COMPRA CON MERCADO PAGO ---  */
 const finalizarCompra = document.getElementById("compra");
 
-
+console.log(calcularTotal());
 const comprarMercadoPago = async () => {
+    //agregar productos del carrito a items:
     //configuracion del fetch para mercado pago
     const configuracionMP = 
     {
@@ -294,14 +285,9 @@ const comprarMercadoPago = async () => {
         body:JSON.stringify({
             "items": [
             {
-                "title": "Mi producto",
-                "quantity": 3,
-                "unit_price": 1000
-            },
-            {
-                "title": "Mi producto2",
-                "quantity": 2,
-                "unit_price": 3000
+                "title": `Compra de ${carritoCantidad} productos en Holly e-commers`,
+                "quantity": 1,
+                "unit_price": total
             }
             ]
         })
