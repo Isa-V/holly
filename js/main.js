@@ -38,9 +38,6 @@ productTitle ? productTitle.innerText = seleccion : null;
 let carrito = JSON.parse(localStorage.getItem("carrito")|| "[]")
 //contar la cantidad de elementos del carrito
 let carritoCantidad = carrito.map(producto=> producto.quantity).reduce((prev,curr)=> prev+curr,0);
-//valor del total de la compra
-
-
 
 //contar productos del carrito reflejarlos en el contador del carro de compra
 const carritoCounter = document.getElementById("carritoCounter");
@@ -127,16 +124,7 @@ const productClic = (e) =>{
             quantity:1,
         });
     }
-
-    //identificar el producto seleccionado
-    localStorage.setItem("carrito",JSON.stringify(carrito));
-    rendercarrito(carrito, contenedorCarrito);
-    //actualizar el valor que se muestra en el contador de elementos del carrito:
-    carritoCantidad = carrito.map(producto=> producto.quantity).reduce((prev,curr)=> prev+curr,0);
-    carritoCounter.innerText = carritoCantidad;
-    //actualizar cantidad en el modal del carrito:
-    carritoModalItems.innerHTML = (carritoCantidad+" items");
-    // agregar alert
+    actualizarVariables()
     sweetAlert()
 }
 
@@ -166,13 +154,19 @@ const contenedorCarrito= document.getElementById("contenedorProductosCarrito");
 const carritoModalTotal = document.getElementById("carritoModalTotal");
 const carritoModalItems = document.getElementById("carritoModalItems");
 
-let total = 0;
+
+//sumar el total de la compra
+let total=0;
+console.log(total)
 const calcularTotal = () => {
+    total=0;
     carrito.forEach(producto=>{
         total+= producto.unit_price*producto.quantity;
     })
     carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
 }
+calcularTotal()
+
 
 // mostrar productos en el carrito
 const rendercarrito = (productos, target) => {
@@ -195,9 +189,9 @@ const rendercarrito = (productos, target) => {
                 </div>
             </div>
             <div class="col-2 d-flex justify-content-center align-items-start">
-                <button type="button" class="btn btn-danger" id"${producto.id}">
+                <button type="button" class="btn btn-danger eliminarCarrito" id="${producto.id}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        class="bi bi-trash-fill eliminarCarrito" viewBox="0 0 16 16">
                         <path
                             d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z">
                         </path>
@@ -209,16 +203,59 @@ const rendercarrito = (productos, target) => {
     })
     //agregar los productos al contenedor
     target ? target.innerHTML = sumaProductos: null;
-    calcularTotal()
+    carritoModalItems ? carritoModalItems.innerHTML = (carritoCantidad+" items") : carritoModalItems.innerHTML ="0 items";
+
+
+    //eliminar producto del carrito
+    const eliminarCarro = document.querySelectorAll(".eliminarCarrito")
+    eliminarCarro.forEach(button => button.addEventListener("click", funcionEliminar));
 }
+
+
+//eliminar productos del carrito con el boton eliminar
+const funcionEliminar = (e) => {
+    console.log ("hola")
+    const idButton = parseInt(e.target.getAttribute("id"));
+    console.log (idButton);
+    
+    console.log(carrito)
+
+    const indexOfObject = carrito.findIndex(object =>{
+        return object.id===idButton;
+    })
+    console.log("index= "+indexOfObject);
+
+    if(indexOfObject>=0){
+
+        carrito.splice(indexOfObject,1);
+        console.log(carrito)
+        // actualizar y renderizar
+        actualizarVariables()
+    }
+}
+
 
 // renderizar los productos en el carro
 rendercarrito(carrito, contenedorCarrito);
+//cantidad de items siempre y cuando se vea el modal
 carritoModalItems ? carritoModalItems.innerHTML = (carritoCantidad+" items") : carritoModalItems.innerHTML ="0 items";
-
 //conectar el DOM con el modal del carrito:
 const myModal = new bootstrap.Modal(document.getElementById("carritoModal"), {});
 
+
+const actualizarVariables =()=>{
+        //identificar el producto seleccionado en el local storage
+        localStorage.setItem("carrito",JSON.stringify(carrito));
+        rendercarrito(carrito, contenedorCarrito);
+        //actualizar el valor que se muestra en el contador de elementos del carrito:
+        carritoCantidad = carrito.map(producto=> producto.quantity).reduce((prev,curr)=> prev+curr,0);
+        carritoCounter.innerText = carritoCantidad;
+        //actualizar cantidad en el modal del carrito:
+        carritoModalItems.innerHTML = (carritoCantidad+" items");
+        calcularTotal()
+        console.log(total)
+        carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
+}
 
 
 /* --- SWEET ALERT DE TOASTIFY--- */
@@ -238,6 +275,9 @@ const sweetAlert = () => {
         onClick: () => myModal.show(), //abre el carrito si se hace clic
     }).showToast();
 }
+
+
+
 
 /* --- USO DE SETINTERVAL PARA INCENTIVAR LA COMPRA --- */
 // agregar un alert cada X tiempo para mostrar que se están llevando los productos
@@ -267,10 +307,12 @@ let randomInt = randomIntervalTimer(30000, 50000);
 setInterval (compraProductoAlert, randomInt);
 
 
+
+
+
 /* --- HACER LA COMPRA CON MERCADO PAGO ---  */
 const finalizarCompra = document.getElementById("compra");
 
-console.log(calcularTotal());
 const comprarMercadoPago = async () => {
     //agregar productos del carrito a items:
     //configuracion del fetch para mercado pago
