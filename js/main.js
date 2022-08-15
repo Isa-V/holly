@@ -113,8 +113,14 @@ const productClic = (e) =>{
 
     // agregar productos al carro solo si no está repedido
     if(carrito.some(element => element.id===producto.id)){
-        const repetido = carrito.findIndex(element=> element.id === producto.id);
-        carrito[repetido].quantity +=1;
+        if(carrito.some(element=> element.quantity<5)){
+            const repetido = carrito.findIndex(element=> element.id === producto.id);
+            carrito[repetido].quantity +=1;
+            sweetAlertAgregaste()
+        }else{
+            sweetAlertError()
+        }
+
     } else{
         carrito.push({
             id: producto.id,
@@ -123,9 +129,10 @@ const productClic = (e) =>{
             imagen:producto.imagen,
             quantity:1,
         });
+        sweetAlertAgregaste();
     }
     actualizarVariables()
-    sweetAlert()
+    
 }
 
 
@@ -181,7 +188,7 @@ const rendercarrito = (productos, target) => {
                     <h6>$${preciosConPunto(producto.unit_price)} c/u</h6>
                 </div>
                 <div class="input-group-sm flex-nowrap">
-                    <input type="number" class="carritoModalCantidad" value="${producto.quantity}" id="${producto.id}">
+                    <input type="number" min="0" max="5" class="carritoModalCantidad" value="${producto.quantity}" id="${producto.id}">
                 </div>
                 <div class="carritoModalTotal">
                     <h4>$${preciosConPunto(parseInt(producto.quantity)*parseInt(producto.unit_price))}</h4>
@@ -230,7 +237,6 @@ const funcionEliminar = (e) => {
     console.log("index= "+indexOfObject);
 
     if(indexOfObject>=0){
-
         carrito.splice(indexOfObject,1);
         console.log(carrito)
         // actualizar y renderizar
@@ -244,10 +250,20 @@ const funcionActualizaCantidad = (e) =>{
     console.log("Cantidad "+valorActualizado);
     console.log("ID producto = "+indexProducto);
 
-    const buscar = carrito.findIndex(element=> element.id === indexProducto)
-    carrito[buscar].quantity = valorActualizado;
-    console.log(carrito);
-    actualizarVariables();
+    if (valorActualizado>0 && valorActualizado<=5){
+        const buscar = carrito.findIndex(element=> element.id === indexProducto)
+        carrito[buscar].quantity = valorActualizado;
+        console.log(carrito);
+        actualizarVariables();
+        e.target.classList.toggle("disabled">=5)
+    }else if (valorActualizado<=0){
+        funcionEliminar(e)
+    }else if (valorActualizado>5){
+        const buscar = carrito.findIndex(element=> element.id === indexProducto)
+        carrito[buscar].quantity = 5;
+        sweetAlertError()
+        actualizarVariables();
+    }
 }
 
 
@@ -262,7 +278,7 @@ const myModal = new bootstrap.Modal(document.getElementById("carritoModal"), {})
 
 
 /* --- SWEET ALERT DE TOASTIFY--- */
-const sweetAlert = () => {
+const sweetAlertAgregaste = () => {
     Toastify({
         text: "Agregaste un producto al carrito",
         duration: 2000,
@@ -273,6 +289,22 @@ const sweetAlert = () => {
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
             background: "#000",
+            color:"#fff"
+        },
+        onClick: () => myModal.show(), //abre el carrito si se hace clic
+    }).showToast();
+}
+const sweetAlertError = () => {
+    Toastify({
+        text: "Puedes agregar hasta 5 productos iguales al carro",
+        duration: 2000,
+        newWindow: true,
+        close: true,
+        gravity: "bottom", // `top` or `bottom`
+        position: "center", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+            background: "#CC1B31",
             color:"#fff"
         },
         onClick: () => myModal.show(), //abre el carrito si se hace clic
