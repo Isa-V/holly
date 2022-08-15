@@ -154,7 +154,6 @@ const contenedorCarrito= document.getElementById("contenedorProductosCarrito");
 const carritoModalTotal = document.getElementById("carritoModalTotal");
 const carritoModalItems = document.getElementById("carritoModalItems");
 
-
 //sumar el total de la compra
 let total=0;
 console.log(total)
@@ -182,7 +181,7 @@ const rendercarrito = (productos, target) => {
                     <h6>$${preciosConPunto(producto.unit_price)} c/u</h6>
                 </div>
                 <div class="input-group-sm flex-nowrap">
-                    <input type="number" class="carritoModalCantidad" value="${producto.quantity}">
+                    <input type="number" class="carritoModalCantidad" value="${producto.quantity}" id="${producto.id}">
                 </div>
                 <div class="carritoModalTotal">
                     <h4>$${preciosConPunto(parseInt(producto.quantity)*parseInt(producto.unit_price))}</h4>
@@ -206,15 +205,20 @@ const rendercarrito = (productos, target) => {
     carritoModalItems ? carritoModalItems.innerHTML = (carritoCantidad+" items") : carritoModalItems.innerHTML ="0 items";
 
 
-    //eliminar producto del carrito
+    //elementos del DOM que se van a modificar dentro del modal del carrito
     const eliminarCarro = document.querySelectorAll(".eliminarCarrito")
+    const carritoModalCantidad = document.querySelectorAll(".carritoModalCantidad");
+
+    //llamar a la función para eliminar producto del carrito
     eliminarCarro.forEach(button => button.addEventListener("click", funcionEliminar));
+
+    //llamar a la función para modificar cantidad de elementos
+    carritoModalCantidad.forEach(input=>input.addEventListener("change", funcionActualizaCantidad))
 }
 
 
 //eliminar productos del carrito con el boton eliminar
 const funcionEliminar = (e) => {
-    console.log ("hola")
     const idButton = parseInt(e.target.getAttribute("id"));
     console.log (idButton);
     
@@ -232,6 +236,18 @@ const funcionEliminar = (e) => {
         // actualizar y renderizar
         actualizarVariables()
     }
+}
+
+const funcionActualizaCantidad = (e) =>{
+    let valorActualizado = parseInt(e.target.value);
+    let indexProducto = parseInt(e.target.id);
+    console.log("Cantidad "+valorActualizado);
+    console.log("ID producto = "+indexProducto);
+
+    const buscar = carrito.findIndex(element=> element.id === indexProducto)
+    carrito[buscar].quantity = valorActualizado;
+    console.log(carrito);
+    actualizarVariables();
 }
 
 
