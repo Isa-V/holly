@@ -334,13 +334,29 @@ const compraProductoAlert = () => {
 }
 
 // funcion para que el tiempo en que salga el alert sea aleatorio
-
 const randomIntervalTimer = (min, max) => { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 let randomInt = randomIntervalTimer(30000, 50000);
 setInterval (compraProductoAlert, randomInt);
 
+
+
+/* ---FUNCION PARA ACTUALIZAR LAS VARIABLES */
+const actualizarVariables =()=>{
+    //identificar el producto seleccionado en el local storage
+    localStorage.setItem("carrito",JSON.stringify(carrito));
+    rendercarrito(carrito, contenedorCarrito);
+    //actualizar el valor que se muestra en el contador de elementos del carrito:
+    carritoCantidad = carrito.map(producto=> producto.quantity).reduce((prev,curr)=> prev+curr,0);
+    carritoCounter.innerText = carritoCantidad;
+    //actualizar cantidad en el modal del carrito:
+    carritoModalItems.innerHTML = (carritoCantidad+" items");
+    calcularTotal()
+    console.log(total)
+    carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
+    finalizarCompra.classList.toggle("disabled", total<=0)
+}
 
 
 
@@ -368,8 +384,15 @@ const comprarMercadoPago = async () => {
                 "quantity": 1,
                 "unit_price": total
             }
-            ]
-        })
+            ],
+            "back_urls": {
+                "success": "https://isa-v.github.io/holly-e-commerce-Vera/pages/success-checkout/",
+                "failure": "http://www.tu-sitio/failure",
+                "pending": "http://www.tu-sitio/pending"
+            },
+            "auto_return": "approved",
+        }),
+
     }
     //fetch de la respuesta
     const respuesta = fetch(`${url_api_mercadoPago}/checkout/preferences`,configuracionMP)
@@ -386,18 +409,3 @@ const comprarMercadoPago = async () => {
 
 finalizarCompra.addEventListener("click", comprarMercadoPago);
 
-
-const actualizarVariables =()=>{
-    //identificar el producto seleccionado en el local storage
-    localStorage.setItem("carrito",JSON.stringify(carrito));
-    rendercarrito(carrito, contenedorCarrito);
-    //actualizar el valor que se muestra en el contador de elementos del carrito:
-    carritoCantidad = carrito.map(producto=> producto.quantity).reduce((prev,curr)=> prev+curr,0);
-    carritoCounter.innerText = carritoCantidad;
-    //actualizar cantidad en el modal del carrito:
-    carritoModalItems.innerHTML = (carritoCantidad+" items");
-    calcularTotal()
-    console.log(total)
-    carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
-    finalizarCompra.classList.toggle("disabled", total<=0)
-}
