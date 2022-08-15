@@ -259,19 +259,6 @@ carritoModalItems ? carritoModalItems.innerHTML = (carritoCantidad+" items") : c
 const myModal = new bootstrap.Modal(document.getElementById("carritoModal"), {});
 
 
-const actualizarVariables =()=>{
-        //identificar el producto seleccionado en el local storage
-        localStorage.setItem("carrito",JSON.stringify(carrito));
-        rendercarrito(carrito, contenedorCarrito);
-        //actualizar el valor que se muestra en el contador de elementos del carrito:
-        carritoCantidad = carrito.map(producto=> producto.quantity).reduce((prev,curr)=> prev+curr,0);
-        carritoCounter.innerText = carritoCantidad;
-        //actualizar cantidad en el modal del carrito:
-        carritoModalItems.innerHTML = (carritoCantidad+" items");
-        calcularTotal()
-        console.log(total)
-        carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
-}
 
 
 /* --- SWEET ALERT DE TOASTIFY--- */
@@ -328,6 +315,8 @@ setInterval (compraProductoAlert, randomInt);
 
 /* --- HACER LA COMPRA CON MERCADO PAGO ---  */
 const finalizarCompra = document.getElementById("compra");
+//deshabilitar boton si la compra está en 0
+finalizarCompra.classList.toggle("disabled", total<=0)
 
 const comprarMercadoPago = async () => {
     //agregar productos del carrito a items:
@@ -364,3 +353,19 @@ const comprarMercadoPago = async () => {
 }
 
 finalizarCompra.addEventListener("click", comprarMercadoPago);
+
+
+const actualizarVariables =()=>{
+    //identificar el producto seleccionado en el local storage
+    localStorage.setItem("carrito",JSON.stringify(carrito));
+    rendercarrito(carrito, contenedorCarrito);
+    //actualizar el valor que se muestra en el contador de elementos del carrito:
+    carritoCantidad = carrito.map(producto=> producto.quantity).reduce((prev,curr)=> prev+curr,0);
+    carritoCounter.innerText = carritoCantidad;
+    //actualizar cantidad en el modal del carrito:
+    carritoModalItems.innerHTML = (carritoCantidad+" items");
+    calcularTotal()
+    console.log(total)
+    carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
+    finalizarCompra.classList.toggle("disabled", total<=0)
+}
