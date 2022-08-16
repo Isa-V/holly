@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
@@ -10,7 +10,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <!-- Boostrap css 5.0 -->
-    <link rel="stylesheet" href="css/main-styles.css">
+    <link rel="stylesheet" href="../css/main-styles.css">
     <!-- Agregar Toastify -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <title>Holly Clothes</title>
@@ -29,7 +29,7 @@
             <!-- Collapsible wrapper -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- logo-->
-                <a class="navbar-brand mt-2 mt-lg-0" href="index.html">logo</a>
+                <a class="navbar-brand mt-2 mt-lg-0" href="../index.html">logo</a>
                 <!-- categorias-->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="callToCategorias">
                 </ul>
@@ -55,50 +55,14 @@
     </nav>
     <!-- Navbar -->
 
-    <header class="headerSection">
-        <h1 id="productTitle">Tops</h1>
-        <p>Nos inspiramos en el poder de la autenticidad y de la libertad.</p>
+    <header class="headerSectionError redBackround" id="headerMessage">
+        <h1 id="headerTitle">Tu pago no pudo ser procesado</h1>
+        <p id="headerSubText">Vuelve al inicio o inténtalo nuevamente</p>
+        <div id="sectionBack">
+            <a href="../index.html" class="btn btn-dark">Volver al inicio</a>
+        </div>
     </header>
 
-    <section class="container-fluid containterMargins">
-        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4" id="contenedorProductos">
-        </div>
-    </section>
-
-
-    <!-- Modal carrito-->
-    <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Carrito</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid" id="contenedorProductosCarrito">
-
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-6">
-                                <h3 id="carritoModalTotal">Total: $50.000</h3>
-                                <h6 id="carritoModalItems"> 3 items</h6>
-                            </div>
-                            <div class="col-6 d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-primary enabled" id="compra">Finalizar
-                                    compra</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
     <footer class="bg-dark text-center text-white">
         <!-- Grid container -->
         <div class="container p-4">
@@ -135,20 +99,15 @@
         </div>
         <!-- Copyright -->
     </footer>
-    <!-- Footer -->
 
-
-    <!-- boostrap 5.0 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        <!-- boostrap 5.0 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <!-- boostrap 5.0 -->
+        <!-- boostrap 5.0 -->
 
-    <!-- ToastifyJs  -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
-    <!-- mi js -->
-    <script src="js/main.js"></script>
+        <!-- mi js -->
+        <script src="../js/main.js"></script>
 </body>
 
 </html>

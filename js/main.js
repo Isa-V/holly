@@ -1,7 +1,7 @@
 /* --- URL DE MERCADO PAGO --- */
 const url_api_mercadoPago = "https://api.mercadopago.com";
 const api_key_mercadoPago = "TEST-3726406462130735-081421-8879f58907ed1d1a4354534fae4255e0-1170351237";
-
+const URL = "https://isa-v.github.io/holly-e-commerce-Vera/"
 
 /* ---LISTA DE PRODUCTOS --- */
 let listaProductos = [];
@@ -86,11 +86,15 @@ const renderProductos = (productos, target) => {
     let sumaProductos = "";
     productos.map(producto => {
         sumaProductos += `
-        <div class="col-4 productCard">
-            <img src="${producto.imagen}" id="${producto.id}" ref ="${producto.categoria}" class="productCardImg buttonCard" alt="${producto.nombre}">
-            <div class="productCardInfo">
-                <h6 class="productName">${producto.nombre}</h6>
-                <h5 class="productPrice">$${preciosConPunto(producto.valor)}</h5>
+        <div class="col mb-4">
+            <div class="card h-100">
+                <img src="${producto.imagen}" id="${producto.id}" ref ="${producto.id}" class="productCardImg buttonCard card-img-top" alt="${producto.nombre}">
+                <div class="card-body">
+                    <h6 class="card-title">${producto.nombre}</h6>
+                </div>
+                <div class="card-footer">
+                    <h4 class="card-text">$${preciosConPunto(producto.valor)}</h4>
+                </div>
             </div>
         </div>
         `
@@ -103,8 +107,6 @@ const renderProductos = (productos, target) => {
     buttonsProduct.forEach(buttonProduct => buttonProduct.addEventListener("click", productClic));
 }
 
-// identificar el producto que se debe mostrar después de hacer clic en la proxima pestaña y guardarla en el local storage para que se mantenga en la proxima pestaña
-let productShow = JSON.parse(localStorage.getItem("productShow")|| "[]")
 
 // crear funcion para hacer clic en el producto
 const productClic = (e) =>{
@@ -112,12 +114,12 @@ const productClic = (e) =>{
     const producto = listaProductos.find(producto => producto.id === idProducto);
 
     // agregar productos al carro solo si no está repedido
-    if(carrito.some(element => element.id===producto.id)){
+    if(carrito.some(element => element.id==producto.id)){
         if(carrito.some(element=> element.quantity<5)){
             const repetido = carrito.findIndex(element=> element.id === producto.id);
             carrito[repetido].quantity +=1;
             sweetAlertAgregaste()
-        }else{
+        }else if(carrito.some(element=> element.quantity>=5)){
             sweetAlertError()
         }
 
@@ -163,7 +165,6 @@ const carritoModalItems = document.getElementById("carritoModalItems");
 
 //sumar el total de la compra
 let total=0;
-console.log(total)
 const calcularTotal = () => {
     total=0;
     carrito.forEach(producto=>{
@@ -227,18 +228,12 @@ const rendercarrito = (productos, target) => {
 //eliminar productos del carrito con el boton eliminar
 const funcionEliminar = (e) => {
     const idButton = parseInt(e.target.getAttribute("id"));
-    console.log (idButton);
-    
-    console.log(carrito)
-
     const indexOfObject = carrito.findIndex(object =>{
         return object.id===idButton;
     })
-    console.log("index= "+indexOfObject);
 
     if(indexOfObject>=0){
         carrito.splice(indexOfObject,1);
-        console.log(carrito)
         // actualizar y renderizar
         actualizarVariables()
     }
@@ -247,13 +242,10 @@ const funcionEliminar = (e) => {
 const funcionActualizaCantidad = (e) =>{
     let valorActualizado = parseInt(e.target.value);
     let indexProducto = parseInt(e.target.id);
-    console.log("Cantidad "+valorActualizado);
-    console.log("ID producto = "+indexProducto);
 
     if (valorActualizado>0 && valorActualizado<=5){
         const buscar = carrito.findIndex(element=> element.id === indexProducto)
         carrito[buscar].quantity = valorActualizado;
-        console.log(carrito);
         actualizarVariables();
         e.target.classList.toggle("disabled">=5)
     }else if (valorActualizado<=0){
@@ -353,7 +345,6 @@ const actualizarVariables =()=>{
     //actualizar cantidad en el modal del carrito:
     carritoModalItems.innerHTML = (carritoCantidad+" items");
     calcularTotal()
-    console.log(total)
     carritoModalTotal.innerText=preciosConPunto(`Total: $${total}`);
     finalizarCompra.classList.toggle("disabled", total<=0)
 }
@@ -362,12 +353,24 @@ const actualizarVariables =()=>{
 
 
 /* --- HACER LA COMPRA CON MERCADO PAGO ---  */
+let id_compra;
 const finalizarCompra = document.getElementById("compra");
 //deshabilitar boton si la compra está en 0
 finalizarCompra.classList.toggle("disabled", total<=0)
 
 const comprarMercadoPago = async () => {
     //agregar productos del carrito a items:
+    let items = [];
+    carrito.forEach(element => {
+        items.push({
+            title:element.title, 
+            unit_price:element.unit_price,
+            quantity: element.quantity,
+            picture_url: element.imagen
+        });
+    });
+
+    
     //configuracion del fetch para mercado pago
     const configuracionMP = 
     {
@@ -378,17 +381,10 @@ const comprarMercadoPago = async () => {
             "cache-control": "no-cache"
         },
         body:JSON.stringify({
-            "items": [
-            {
-                "title": `Compra de ${carritoCantidad} productos en Holly e-commers`,
-                "quantity": 1,
-                "unit_price": total
-            }
-            ],
+            "items": items,
             "back_urls": {
-                "success": "https://isa-v.github.io/holly-e-commerce-Vera/pages/success-checkout/",
-                "failure": "http://www.tu-sitio/failure",
-                "pending": "http://www.tu-sitio/pending"
+                "success": `${URL}pages/success-checkout.html`,
+                "failure": `${URL}pages/error-checkout.html`
             },
             "auto_return": "approved",
         }),
@@ -399,7 +395,6 @@ const comprarMercadoPago = async () => {
     respuesta
     .then(res => res.json())
     .then((res)=> {
-        console.log(res);
         //lleva a pagar en mercado pago
         if(res.init_point){
             window.location.href= res.init_point;

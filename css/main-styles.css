@@ -3,10 +3,39 @@
     justify-content: flex-end;
 }
 
+.greenBackround{
+    background-color: #1ce48a;
+}
+.redBackround{
+    background-color: #fd7688;
+}
 .headerSection {
-    padding: 3%;
+    padding: 150px 10% 50px 10%;
 }
 
+.headerSectionError{
+    padding: 250px 10% 250px 10%;
+}
+.detailSection{
+    padding: 80px 10% 200px 10%;
+}
+.detailMain{
+    display: flex;
+    flex-direction: row;
+}
+#detailContainer{
+    padding-top: 20px;
+    width: 50%;
+}
+#productsContainer{
+    width: 50%;
+}
+#sectionBack{
+    padding-top: 50px;
+}
+.miniImg{
+    width: 50px;
+}
 .menuFiltros {
     padding: 20px;
 }
@@ -17,22 +46,19 @@
 
 .productCard {
     background-color: rgb(255, 255, 255);
-    min-width: 300px;
-    max-width: 320px;
+    width: 350px;
     padding: 0;
 }
 
-.productCardImg {
-    height: 350px;
-    /*     background-color: cornflowerblue; */
-}
 
 .productCardInfo {
     padding: 10px;
+    width: 350px;
 }
 
 .productName {
     margin-bottom: 10px;
+    width: 100%;
 }
 
 .productCardImg:hover {
@@ -46,6 +72,12 @@
 .cardsContainter {
     display: flex;
     justify-content: left;
+}
+
+.containterMargins{
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 200px;
 }
 
 /* --- modal carro compras --- */
@@ -100,7 +132,20 @@
 .productInfo_smallImg {
     width: 50%;
     margin-bottom: 10px;
+}
 
+@media (max-width:780px){
+    .detailMain{
+        flex-direction: column;
+    }
+    #detailContainer{
+        padding-top: 20px;
+        width: 100%;
+    }
+    #productsContainer{
+        width: 100%;
+        padding-top: 20px;
+    }
 }
 
 @media (max-width:540px) {
