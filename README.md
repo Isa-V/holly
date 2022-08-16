@@ -1,4 +1,4 @@
-cambiar variable const URL para probar pagos en local
+cambiar variable const URL en main.js y checkout.js para probar pagos en local
 
 
 Usuario para hacer pruebas con mercadoPago:
